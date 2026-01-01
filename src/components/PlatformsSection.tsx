@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Briefcase, Calendar, Rocket, ArrowRight, ExternalLink } from "lucide-react";
@@ -11,7 +12,8 @@ const platforms = [
     description: "Access and manage government and private tenders with our comprehensive tender management platform.",
     icon: FileText,
     status: "live",
-    color: "from-primary to-accent",
+    gradient: "from-primary via-primary/80 to-accent",
+    bgGlow: "bg-primary/20",
     url: "https://tender.exploree.io",
   },
   {
@@ -20,7 +22,8 @@ const platforms = [
     description: "Find your dream career with AI-powered job matching and application tracking.",
     icon: Briefcase,
     status: "coming-soon",
-    color: "from-emerald-500 to-teal-500",
+    gradient: "from-emerald-500 via-emerald-400 to-teal-500",
+    bgGlow: "bg-emerald-500/20",
     url: "jobs.exploree.io",
   },
   {
@@ -29,7 +32,8 @@ const platforms = [
     description: "Discover and participate in industry events, conferences, and networking opportunities.",
     icon: Calendar,
     status: "coming-soon",
-    color: "from-orange-500 to-amber-500",
+    gradient: "from-orange-500 via-orange-400 to-amber-500",
+    bgGlow: "bg-orange-500/20",
     url: "events.exploree.io",
   },
   {
@@ -38,7 +42,8 @@ const platforms = [
     description: "Explore grants, funding, partnerships, and business opportunities tailored to your profile.",
     icon: Rocket,
     status: "coming-soon",
-    color: "from-violet-500 to-purple-500",
+    gradient: "from-violet-500 via-violet-400 to-purple-500",
+    bgGlow: "bg-violet-500/20",
     url: "opportunity.exploree.io",
   },
 ];
@@ -52,13 +57,45 @@ const PlatformsSection = () => {
     setIsWaitlistOpen(true);
   };
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <>
-      <section id="platforms" className="py-24 md:py-32 relative">
-        <div className="container mx-auto px-4">
+      <section id="platforms" className="py-24 md:py-32 relative overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-mesh" />
+
+        <div className="container mx-auto px-4 relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 px-4 py-1.5 text-primary border-primary/30">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <Badge variant="outline" className="mb-4 px-4 py-1.5 text-primary border-primary/30 bg-primary/5">
               Our Ecosystem
             </Badge>
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
@@ -67,40 +104,64 @@ const PlatformsSection = () => {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Access all our platforms with a single unified account. No more juggling multiple logins.
             </p>
-          </div>
+          </motion.div>
 
           {/* Platform Cards */}
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {platforms.map((platform, index) => {
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto"
+          >
+            {platforms.map((platform) => {
               const Icon = platform.icon;
               const isLive = platform.status === "live";
 
               return (
-                <div
+                <motion.div
                   key={platform.id}
-                  className={`glass-card-hover rounded-2xl p-8 relative overflow-hidden ${
+                  variants={itemVariants}
+                  whileHover={{ y: -8 }}
+                  className={`glass-premium rounded-3xl p-8 relative overflow-hidden group ${
                     isLive ? "ring-2 ring-primary/20" : ""
                   }`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
+                  {/* Background Glow */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileHover={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className={`absolute -bottom-20 -right-20 w-60 h-60 rounded-full ${platform.bgGlow} blur-3xl`}
+                  />
+
                   {/* Status Badge */}
                   <div className="absolute top-6 right-6">
                     {isLive ? (
-                      <Badge className="bg-primary/10 text-primary border-primary/30">
-                        <span className="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse" />
+                      <Badge className="bg-primary/10 text-primary border-primary/30 backdrop-blur-sm">
+                        <motion.span
+                          animate={{ opacity: [1, 0.5, 1] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="w-2 h-2 rounded-full bg-primary mr-2 inline-block"
+                        />
                         Live
                       </Badge>
                     ) : (
-                      <Badge variant="secondary" className="bg-muted text-muted-foreground">
+                      <Badge variant="secondary" className="bg-muted/80 text-muted-foreground backdrop-blur-sm">
                         Coming Soon
                       </Badge>
                     )}
                   </div>
 
                   {/* Icon */}
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${platform.color} flex items-center justify-center mb-6`}>
-                    <Icon className="w-7 h-7 text-primary-foreground" />
-                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${platform.gradient} flex items-center justify-center mb-6 relative`}
+                  >
+                    <Icon className="w-8 h-8 text-white" />
+                    <div className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </motion.div>
 
                   {/* Content */}
                   <h3 className="text-xl font-semibold mb-3">{platform.name}</h3>
@@ -108,29 +169,38 @@ const PlatformsSection = () => {
 
                   {/* CTA */}
                   {isLive ? (
-                    <Button variant="hero" className="group" asChild>
-                      <a href={platform.url} target="_blank" rel="noopener noreferrer">
-                        Visit Platform
-                        <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                      </a>
-                    </Button>
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button variant="hero" className="group/btn" asChild>
+                        <a href={platform.url} target="_blank" rel="noopener noreferrer">
+                          Visit Platform
+                          <ExternalLink className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                        </a>
+                      </Button>
+                    </motion.div>
                   ) : (
-                    <Button
-                      variant="hero-secondary"
-                      className="group"
-                      onClick={() => handleJoinWaitlist(platform.id)}
-                    >
-                      Join Waitlist
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                    </Button>
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button
+                        variant="hero-secondary"
+                        className="group/btn"
+                        onClick={() => handleJoinWaitlist(platform.id)}
+                      >
+                        Join Waitlist
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                      </Button>
+                    </motion.div>
                   )}
 
-                  {/* Decorative Element */}
-                  <div className={`absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${platform.color} opacity-10 blur-2xl`} />
-                </div>
+                  {/* Decorative Line */}
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${platform.gradient} origin-left`}
+                  />
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
