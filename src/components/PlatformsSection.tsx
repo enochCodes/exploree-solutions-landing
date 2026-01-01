@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, type Variants } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Briefcase, Calendar, Rocket, ArrowRight, ExternalLink } from "lucide-react";
@@ -51,6 +51,18 @@ const platforms = [
 const PlatformsSection = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const sectionRef = useRef(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Parallax transforms
+  const y1 = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [-60, 100]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [100, -50]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [-10, 15]);
 
   const handleJoinWaitlist = (platformId: string) => {
     setSelectedPlatform(platformId);
@@ -82,9 +94,37 @@ const PlatformsSection = () => {
 
   return (
     <>
-      <section id="platforms" className="py-24 md:py-32 relative overflow-hidden">
+      <section ref={sectionRef} id="platforms" className="py-24 md:py-32 relative overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-mesh" />
+        
+        {/* Parallax Background Elements */}
+        <motion.div
+          style={{ y: y1, rotate }}
+          className="absolute top-[10%] right-[5%] w-72 h-72 bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-3xl"
+        />
+        <motion.div
+          style={{ y: y2 }}
+          className="absolute bottom-[20%] left-[10%] w-96 h-96 bg-gradient-to-tr from-accent/10 to-transparent rounded-full blur-3xl"
+        />
+        <motion.div
+          style={{ y: y3 }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-primary/5 to-transparent rounded-full"
+        />
+        
+        {/* Floating shapes */}
+        <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], [30, -60]) }}
+          className="absolute top-[15%] left-[15%] w-12 h-12 border border-primary/15 rounded-xl rotate-12"
+        />
+        <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], [-40, 80]) }}
+          className="absolute bottom-[25%] right-[12%] w-16 h-16 border-2 border-accent/10 rounded-full"
+        />
+        <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], [50, -30]) }}
+          className="absolute top-[40%] right-[20%] w-8 h-8 bg-primary/5 rounded-lg rotate-45"
+        />
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Section Header */}
@@ -114,7 +154,7 @@ const PlatformsSection = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto"
           >
-            {platforms.map((platform) => {
+            {platforms.map((platform, index) => {
               const Icon = platform.icon;
               const isLive = platform.status === "live";
 
@@ -123,6 +163,9 @@ const PlatformsSection = () => {
                   key={platform.id}
                   variants={itemVariants}
                   whileHover={{ y: -8 }}
+                  style={{
+                    y: useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? 20 : -20, index % 2 === 0 ? -20 : 20]),
+                  }}
                   className={`glass-premium rounded-3xl p-8 relative overflow-hidden group ${
                     isLive ? "ring-2 ring-primary/20" : ""
                   }`}

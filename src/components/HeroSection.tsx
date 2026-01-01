@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { motion, type Variants } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import WaitlistDialog from "./WaitlistDialog";
 
 const HeroSection = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const { scrollY } = useScroll();
+  
+  // Parallax transforms
+  const y1 = useTransform(scrollY, [0, 500], [0, 150]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
+  const y3 = useTransform(scrollY, [0, 500], [0, 200]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const scale = useTransform(scrollY, [0, 400], [1, 0.9]);
+  const rotate1 = useTransform(scrollY, [0, 1000], [0, 45]);
+  const rotate2 = useTransform(scrollY, [0, 1000], [0, -30]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -36,34 +46,18 @@ const HeroSection = () => {
         {/* Mesh Gradient Background */}
         <div className="absolute inset-0 bg-mesh" />
         
-        {/* Animated Gradient Orbs */}
+        {/* Parallax Animated Gradient Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
-            animate={{
-              y: [-10, 10, -10],
-              rotate: [-1, 1, -1],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute top-[15%] left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/20 to-accent/10 blur-[100px]"
+            style={{ y: y1, rotate: rotate1 }}
+            className="absolute top-[15%] left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/20 to-accent/10 blur-[100px] animate-morph"
           />
           <motion.div
-            animate={{
-              y: [10, -10, 10],
-              rotate: [1, -1, 1],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-            className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] rounded-full bg-gradient-to-br from-accent/15 to-primary/10 blur-[80px]"
+            style={{ y: y2, rotate: rotate2 }}
+            className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] rounded-full bg-gradient-to-br from-accent/15 to-primary/10 blur-[80px] animate-morph"
           />
           <motion.div
+            style={{ y: y3 }}
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -75,27 +69,46 @@ const HeroSection = () => {
             }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-primary/10 via-transparent to-transparent"
           />
+          
+          {/* Additional parallax orbs */}
+          <motion.div
+            style={{ y: useTransform(scrollY, [0, 500], [0, 80]) }}
+            className="absolute top-[40%] right-[30%] w-32 h-32 rounded-full bg-accent/10 blur-2xl animate-glow-pulse"
+          />
+          <motion.div
+            style={{ y: useTransform(scrollY, [0, 500], [0, -60]) }}
+            className="absolute top-[60%] left-[25%] w-24 h-24 rounded-full bg-primary/15 blur-xl animate-glow-pulse"
+          />
         </div>
 
-        {/* Animated Grid Pattern */}
-        <div className="absolute inset-0">
+        {/* Animated Grid Pattern with Parallax */}
+        <motion.div style={{ y: useTransform(scrollY, [0, 500], [0, 50]) }} className="absolute inset-0">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.03)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.06)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.06)_1px,transparent_1px)] bg-[size:8rem_8rem]" />
-        </div>
+        </motion.div>
 
-        {/* Floating Decorative Elements */}
+        {/* Floating Decorative Elements with Parallax */}
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          style={{ y: y2, rotate: rotate1 }}
           className="absolute top-[20%] right-[15%] w-20 h-20 border border-primary/20 rounded-2xl"
         />
         <motion.div
-          animate={{ rotate: -360 }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          style={{ y: y1, rotate: rotate2 }}
           className="absolute bottom-[25%] left-[12%] w-16 h-16 border border-accent/20 rounded-full"
         />
+        <motion.div
+          style={{ y: useTransform(scrollY, [0, 500], [0, 120]) }}
+          className="absolute top-[35%] left-[8%] w-8 h-8 bg-primary/10 rounded-lg rotate-45"
+        />
+        <motion.div
+          style={{ y: useTransform(scrollY, [0, 500], [0, -80]) }}
+          className="absolute bottom-[35%] right-[8%] w-12 h-12 border-2 border-accent/15 rounded-full"
+        />
 
-        <div className="container mx-auto px-4 pt-32 pb-20 relative z-10">
+        <motion.div 
+          style={{ opacity, scale }}
+          className="container mx-auto px-4 pt-32 pb-20 relative z-10"
+        >
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -194,7 +207,7 @@ const HeroSection = () => {
               ))}
             </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Bottom Gradient Fade */}
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/50 to-transparent" />
