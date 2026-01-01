@@ -6,6 +6,18 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle2, Sparkles } from "lucide-react";
+import { z } from "zod";
+
+// API endpoint - configure this in your environment
+const API_URL = import.meta.env.VITE_API_URL || "https://your-api.vercel.app";
+
+// Validation schema
+const waitlistSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name too long"),
+  email: z.string().trim().email("Invalid email").max(255, "Email too long"),
+  company: z.string().trim().max(100, "Company name too long").optional(),
+  interestedPlatforms: z.array(z.string()),
+});
 
 interface WaitlistDialogProps {
   open: boolean;
@@ -42,10 +54,18 @@ const WaitlistDialog = ({ open, onOpenChange, defaultPlatform }: WaitlistDialogP
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.email || !formData.name) {
+    // Validate form data
+    const validation = waitlistSchema.safeParse({
+      name: formData.name,
+      email: formData.email,
+      company: formData.company || undefined,
+      interestedPlatforms: formData.selectedPlatforms,
+    });
+
+    if (!validation.success) {
       toast({
-        title: "Please fill in required fields",
-        description: "Name and email are required to join the waitlist.",
+        title: "Validation Error",
+        description: validation.error.errors[0]?.message || "Please check your input.",
         variant: "destructive",
       });
       return;
@@ -53,22 +73,40 @@ const WaitlistDialog = ({ open, onOpenChange, defaultPlatform }: WaitlistDialogP
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch(`${API_URL}/api/waitlist`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(validation.data),
+      });
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to join waitlist");
+      }
 
-    toast({
-      title: "You're on the list! 🎉",
-      description: "We'll notify you when new platforms launch.",
-    });
+      setIsSuccess(true);
+      toast({
+        title: "You're on the list! 🎉",
+        description: "We'll notify you when new platforms launch.",
+      });
 
-    setTimeout(() => {
-      onOpenChange(false);
-      setIsSuccess(false);
-      setFormData({ name: "", email: "", company: "", selectedPlatforms: [] });
-    }, 2000);
+      setTimeout(() => {
+        onOpenChange(false);
+        setIsSuccess(false);
+        setFormData({ name: "", email: "", company: "", selectedPlatforms: [] });
+      }, 2000);
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: error instanceof Error ? error.message : "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
