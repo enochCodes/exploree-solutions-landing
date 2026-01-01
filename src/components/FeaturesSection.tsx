@@ -1,4 +1,5 @@
-import { motion, type Variants } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
+import { useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Zap, Users, Globe, Lock, Layers } from "lucide-react";
 
@@ -36,6 +37,19 @@ const features = [
 ];
 
 const FeaturesSection = () => {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Parallax transforms for background elements
+  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [-50, 100]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 20]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.9]);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -60,17 +74,44 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section id="features" className="py-24 md:py-32 relative overflow-hidden">
+    <section ref={sectionRef} id="features" className="py-24 md:py-32 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-muted/30" />
       <div className="absolute inset-0 bg-mesh opacity-50" />
       
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.02)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+      {/* Parallax Grid Pattern */}
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [0, 30]) }}
+        className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.02)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]"
+      />
 
-      {/* Decorative Orbs */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-primary/5 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-accent/5 to-transparent rounded-full blur-3xl" />
+      {/* Parallax Decorative Orbs */}
+      <motion.div
+        style={{ y: y1, rotate, scale }}
+        className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-primary/8 to-transparent rounded-full blur-3xl"
+      />
+      <motion.div
+        style={{ y: y2 }}
+        className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-accent/8 to-transparent rounded-full blur-3xl"
+      />
+      <motion.div
+        style={{ y: y3 }}
+        className="absolute top-1/3 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-2xl"
+      />
+      
+      {/* Floating geometric shapes with parallax */}
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [50, -80]) }}
+        className="absolute top-[20%] right-[10%] w-16 h-16 border border-primary/10 rounded-xl rotate-12"
+      />
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [-30, 60]) }}
+        className="absolute bottom-[30%] left-[5%] w-12 h-12 bg-accent/5 rounded-lg rotate-45"
+      />
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [40, -40]) }}
+        className="absolute top-[60%] right-[5%] w-8 h-8 border-2 border-primary/10 rounded-full"
+      />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
@@ -107,8 +148,13 @@ const FeaturesSection = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="glass-premium rounded-2xl p-6 group spotlight cursor-default"
+                className="glass-premium rounded-2xl p-6 group spotlight cursor-default relative overflow-hidden"
               >
+                {/* Hover glow effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                
                 {/* Icon Container */}
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
@@ -125,10 +171,10 @@ const FeaturesSection = () => {
                 </motion.div>
 
                 {/* Content */}
-                <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+                <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors relative z-10">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed relative z-10">
                   {feature.description}
                 </p>
 
