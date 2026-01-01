@@ -7,7 +7,7 @@ import WaitlistDialog from "./WaitlistDialog";
 const HeroSection = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const { scrollY } = useScroll();
-  
+
   // Parallax transforms
   const y1 = useTransform(scrollY, [0, 500], [0, 150]);
   const y2 = useTransform(scrollY, [0, 500], [0, -100]);
@@ -45,7 +45,7 @@ const HeroSection = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Mesh Gradient Background */}
         <div className="absolute inset-0 bg-mesh" />
-        
+
         {/* Parallax Animated Gradient Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
@@ -69,7 +69,7 @@ const HeroSection = () => {
             }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-primary/10 via-transparent to-transparent"
           />
-          
+
           {/* Additional parallax orbs */}
           <motion.div
             style={{ y: useTransform(scrollY, [0, 500], [0, 80]) }}
@@ -105,7 +105,7 @@ const HeroSection = () => {
           className="absolute bottom-[35%] right-[8%] w-12 h-12 border-2 border-accent/15 rounded-full"
         />
 
-        <motion.div 
+        <motion.div
           style={{ opacity, scale }}
           className="container mx-auto px-4 pt-32 pb-20 relative z-10"
         >
@@ -119,12 +119,12 @@ const HeroSection = () => {
             <motion.div variants={itemVariants}>
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-premium border-primary/20 mb-8 group cursor-default">
                 <motion.div
-                  animate={{ rotate: [0, 15, -15, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
                 >
                   <Sparkles className="w-4 h-4 text-primary" />
                 </motion.div>
-                <span className="text-sm font-medium text-foreground/80">Unified Platform Solutions</span>
+                <span className="text-sm font-medium text-foreground/80">AI-Powered Opportunity Discovery</span>
                 <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               </div>
             </motion.div>
@@ -134,9 +134,9 @@ const HeroSection = () => {
               variants={itemVariants}
               className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
             >
-              Discover Opportunities
+              AI-Powered
               <br />
-              <span className="gradient-text">All in One Place</span>
+              <span className="gradient-text">Opportunity Discovery</span>
             </motion.h1>
 
             {/* Subheadline */}
@@ -144,7 +144,7 @@ const HeroSection = () => {
               variants={itemVariants}
               className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-balance leading-relaxed"
             >
-              Exploree Solutions connects you to tenders, jobs, events, and opportunities through a unified ecosystem. One account, endless possibilities.
+              Our AI learns your preferences and delivers personalized job, tender, event, and scholarship matches directly to you — no endless searching required.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -156,18 +156,16 @@ const HeroSection = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Button variant="hero" size="xl" className="group relative overflow-hidden" asChild>
-                  <a href="https://tender.exploree.io" target="_blank" rel="noopener noreferrer">
-                    <span className="relative z-10 flex items-center gap-2">
-                      Explore Tenders
-                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                    </span>
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%]"
-                      animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                    />
-                  </a>
+                <Button variant="hero" size="xl" className="group relative overflow-hidden" onClick={() => setIsWaitlistOpen(true)}>
+                  <span className="relative z-10 flex items-center gap-2">
+                    Get Started Today
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%]"
+                    animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  />
                 </Button>
               </motion.div>
               <motion.div
@@ -177,10 +175,10 @@ const HeroSection = () => {
                 <Button
                   variant="hero-secondary"
                   size="xl"
-                  onClick={() => setIsWaitlistOpen(true)}
                   className="backdrop-blur-xl"
+                  asChild
                 >
-                  Join the Waitlist
+                  <a href="#how-it-works">Learn How It Works</a>
                 </Button>
               </motion.div>
             </motion.div>
@@ -191,17 +189,17 @@ const HeroSection = () => {
               className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20"
             >
               {[
-                { value: "4", label: "Platforms" },
-                { value: "1", label: "Account" },
-                { value: "∞", label: "Opportunities" },
-                { value: "24/7", label: "Access" },
+                { value: "Jobs", label: "Career Opportunities" },
+                { value: "Tenders", label: "Business Growth" },
+                { value: "Events", label: "Networking" },
+                { value: "Grants", label: "Funding" },
               ].map((stat, index) => (
                 <motion.div
                   key={index}
                   whileHover={{ y: -4, scale: 1.02 }}
                   className="glass-premium rounded-2xl p-6 text-center group cursor-default"
                 >
-                  <div className="text-3xl md:text-4xl font-bold gradient-text mb-1">{stat.value}</div>
+                  <div className="text-2xl md:text-3xl font-bold gradient-text mb-1">{stat.value}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </motion.div>
               ))}

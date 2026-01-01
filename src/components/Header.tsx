@@ -10,9 +10,11 @@ const Header = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
   const navLinks = [
-    { href: "#platforms", label: "Platforms" },
-    { href: "#features", label: "Features" },
-    { href: "#about", label: "About" },
+    { href: "#hero", label: "Home" },
+    { href: "#how-it-works", label: "How it Works" },
+    { href: "#who-we-help", label: "For Seekers" },
+    { href: "#who-we-help", label: "For Employers" },
+    { href: "#cta", label: "Contact" },
   ];
 
   return (
@@ -43,7 +45,9 @@ const Header = () => {
                 />
                 <span className="text-primary-foreground font-bold text-xl relative z-10">E</span>
               </div>
-              <span className="text-xl font-bold text-foreground">Exploree</span>
+              <span className="text-xl font-bold">
+                <span className="gradient-text">xploree</span>
+              </span>
             </motion.a>
 
             {/* Desktop Navigation */}
@@ -77,19 +81,8 @@ const Header = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
               >
-                <Button variant="ghost" asChild>
-                  <a href="https://tender.exploree.io" target="_blank" rel="noopener noreferrer">
-                    Go to Tender
-                  </a>
-                </Button>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-              >
                 <Button variant="hero" onClick={() => setIsWaitlistOpen(true)}>
-                  Join Waitlist
+                  Get Started
                 </Button>
               </motion.div>
             </div>
@@ -149,13 +142,8 @@ const Header = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.3 }}
                   >
-                    <Button variant="ghost" asChild>
-                      <a href="https://tender.exploree.io" target="_blank" rel="noopener noreferrer">
-                        Go to Tender
-                      </a>
-                    </Button>
                     <Button variant="hero" onClick={() => setIsWaitlistOpen(true)}>
-                      Join Waitlist
+                      Get Started
                     </Button>
                   </motion.div>
                 </nav>

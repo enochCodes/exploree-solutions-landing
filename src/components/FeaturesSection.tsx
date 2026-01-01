@@ -1,38 +1,41 @@
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useRef } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Zap, Users, Globe, Lock, Layers } from "lucide-react";
+import { Brain, Sparkles, Layers, Bell, Globe, ShieldCheck } from "lucide-react";
 
 const features = [
   {
-    icon: Lock,
-    title: "Single Sign-On",
-    description: "One account to access all platforms. Secure, seamless, and simple authentication.",
+    icon: Brain,
+    title: "AI-Powered Matching",
+    description: "Our intelligent algorithms analyze your profile and deliver personalized opportunities automatically.",
+    isAI: true,
   },
   {
-    icon: Zap,
-    title: "Real-time Updates",
-    description: "Get instant notifications about new opportunities matching your preferences.",
-  },
-  {
-    icon: Shield,
-    title: "Secure & Private",
-    description: "Enterprise-grade security to protect your data and business information.",
-  },
-  {
-    icon: Globe,
-    title: "Multi-Region Support",
-    description: "Access opportunities from multiple regions and expand your reach globally.",
-  },
-  {
-    icon: Users,
-    title: "Team Collaboration",
-    description: "Invite team members and collaborate on opportunities together.",
+    icon: Sparkles,
+    title: "Smart Recommendations",
+    description: "Machine learning that gets smarter over time, understanding your preferences and career goals.",
+    isAI: true,
   },
   {
     icon: Layers,
-    title: "Unified Dashboard",
-    description: "Monitor all your activities across platforms from a single dashboard.",
+    title: "All-in-One Platform",
+    description: "Jobs, tenders, events & opportunities — all in one unified ecosystem powered by AI.",
+  },
+  {
+    icon: Bell,
+    title: "Intelligent Alerts",
+    description: "AI-driven notifications that know when and what to alert you about. Never miss a deadline.",
+    isAI: true,
+  },
+  {
+    icon: Globe,
+    title: "Inclusive Access",
+    description: "Digital documents & alerts designed for both urban and rural users across Ethiopia.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Trusted Listings",
+    description: "AI-verified and curated information from trusted stakeholders.",
   },
 ];
 
@@ -78,7 +81,7 @@ const FeaturesSection = () => {
       {/* Background Elements */}
       <div className="absolute inset-0 bg-muted/30" />
       <div className="absolute inset-0 bg-mesh opacity-50" />
-      
+
       {/* Parallax Grid Pattern */}
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], [0, 30]) }}
@@ -98,7 +101,7 @@ const FeaturesSection = () => {
         style={{ y: y3 }}
         className="absolute top-1/3 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-2xl"
       />
-      
+
       {/* Floating geometric shapes with parallax */}
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], [50, -80]) }}
@@ -123,13 +126,13 @@ const FeaturesSection = () => {
           className="text-center mb-16"
         >
           <Badge variant="outline" className="mb-4 px-4 py-1.5 text-primary border-primary/30 bg-primary/5">
-            Why Exploree
+            Why Choose Us
           </Badge>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Built for <span className="gradient-text">Modern Business</span>
+            Why <span className="gradient-text">Exploree Is Different</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Experience the power of unified opportunity management with features designed for efficiency.
+            Built with you in mind — simple, inclusive, and designed to bring opportunities to you.
           </p>
         </motion.div>
 
@@ -150,11 +153,19 @@ const FeaturesSection = () => {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="glass-premium rounded-2xl p-6 group spotlight cursor-default relative overflow-hidden"
               >
+                {/* AI Badge */}
+                {(feature as { isAI?: boolean }).isAI && (
+                  <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-primary/10 border border-primary/20 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-primary" />
+                    <span className="text-[10px] font-medium text-primary">AI</span>
+                  </div>
+                )}
+
                 {/* Hover glow effect */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 />
-                
+
                 {/* Icon Container */}
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
@@ -179,8 +190,8 @@ const FeaturesSection = () => {
                 </p>
 
                 {/* Decorative Corner */}
-                <div className="absolute top-0 right-0 w-20 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-primary/20 rounded-tr-xl" />
+                <div className="absolute bottom-0 right-0 w-20 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-primary/20 rounded-br-xl" />
                 </div>
               </motion.div>
             );

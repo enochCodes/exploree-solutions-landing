@@ -7,7 +7,7 @@ import WaitlistDialog from "./WaitlistDialog";
 const CTASection = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const sectionRef = useRef(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -98,37 +98,25 @@ const CTASection = () => {
               </motion.div>
 
               <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                Ready to <span className="gradient-text">Explore Opportunities</span>?
+                <span className="gradient-text">Get Started Today</span>
               </h2>
               <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto leading-relaxed">
-                Join thousands of businesses already using Exploree to discover and manage opportunities efficiently.
+                Create your profile in minutes and let Exploree do the searching for you. Join Exploree ET and never miss an opportunity again.
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button variant="hero" size="xl" className="group relative overflow-hidden" asChild>
-                    <a href="https://tender.exploree.io" target="_blank" rel="noopener noreferrer">
-                      <span className="relative z-10 flex items-center gap-2">
-                        Start with Tenders
-                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                      </span>
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%]"
-                        animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                      />
-                    </a>
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button
-                    variant="hero-secondary"
-                    size="xl"
-                    onClick={() => setIsWaitlistOpen(true)}
-                    className="backdrop-blur-xl"
-                  >
-                    Join Waitlist
+                  <Button variant="hero" size="xl" className="group relative overflow-hidden" onClick={() => setIsWaitlistOpen(true)}>
+                    <span className="relative z-10 flex items-center gap-2">
+                      Create Your Profile
+                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                    </span>
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%]"
+                      animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    />
                   </Button>
                 </motion.div>
               </div>
