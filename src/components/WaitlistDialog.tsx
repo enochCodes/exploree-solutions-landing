@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -9,7 +11,7 @@ import { Loader2, CheckCircle2, Sparkles } from "lucide-react";
 import { z } from "zod";
 
 // API endpoint - configure this in your environment
-const API_URL = import.meta.env.VITE_API_URL || "https://your-api.vercel.app";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://your-api.vercel.app";
 
 // Validation schema
 const waitlistSchema = z.object({
@@ -53,7 +55,7 @@ const WaitlistDialog = ({ open, onOpenChange, defaultPlatform }: WaitlistDialogP
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form data
     const validation = waitlistSchema.safeParse({
       name: formData.name,

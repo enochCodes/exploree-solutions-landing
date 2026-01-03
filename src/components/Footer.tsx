@@ -1,3 +1,5 @@
+"use client";
+
 import { FileText, Briefcase, Calendar, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollAnimation, staggerContainer, fadeInUp } from "@/hooks/useScrollAnimation";

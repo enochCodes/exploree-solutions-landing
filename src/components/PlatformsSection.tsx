@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, type Variants, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
