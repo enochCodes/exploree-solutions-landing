@@ -92,7 +92,7 @@ export default {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-pattern': 'radial-gradient(circle at 30% 20%, hsla(217, 91%, 60%, 0.08) 0%, transparent 50%), radial-gradient(circle at 70% 80%, hsla(199, 89%, 48%, 0.08) 0%, transparent 50%)',
+        'hero-pattern': 'radial-gradient(circle at 30% 20%, hsla(0, 0%, 7%, 0.06) 0%, transparent 50%), radial-gradient(circle at 70% 80%, hsla(0, 0%, 15%, 0.05) 0%, transparent 50%)',
       },
     },
   },
