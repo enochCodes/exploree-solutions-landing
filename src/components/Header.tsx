@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -32,24 +33,28 @@ const Header = () => {
             {/* Logo */}
             <motion.a
               href="/"
-              className="flex items-center gap-2"
+              className="flex items-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center relative overflow-hidden">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-tr from-primary via-accent to-primary"
-                  animate={{
-                    backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-                  }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                  style={{ backgroundSize: "200% 200%" }}
-                />
-                <span className="text-primary-foreground font-bold text-xl relative z-10">E</span>
-              </div>
-              <span className="text-xl font-bold">
-                <span className="gradient-text">xploree</span>
-              </span>
+              {/* Light mode logo */}
+              <Image
+                src="/logo-light.png"
+                alt="Exploree Solutions"
+                width={160}
+                height={40}
+                className="dark:hidden h-9 w-auto"
+                priority
+              />
+              {/* Dark mode logo */}
+              <Image
+                src="/logo-dark.png"
+                alt="Exploree Solutions"
+                width={160}
+                height={40}
+                className="hidden dark:block h-9 w-auto"
+                priority
+              />
             </motion.a>
 
             {/* Desktop Navigation */}

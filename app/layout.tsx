@@ -4,6 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
     title: "Exploree Solutions | Empowering Digital Growth",
     description: "Innovative digital solutions for businesses in Ethiopia. We specialize in web development, mobile apps, and digital strategy.",
+    icons: {
+        icon: "/favicon-icon.png",
+        apple: "/favicon-icon.png",
+    },
 };
 
 export default function RootLayout({
