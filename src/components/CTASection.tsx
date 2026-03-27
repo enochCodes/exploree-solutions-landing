@@ -19,8 +19,12 @@ const CTASection = () => {
   const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const y2 = useTransform(scrollYProgress, [0, 1], [-80, 120]);
   const y3 = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const y4 = useTransform(scrollYProgress, [0, 1], [-40, 80]);
+  const yShape1 = useTransform(scrollYProgress, [0, 1], [30, -50]);
+  const yShape2 = useTransform(scrollYProgress, [0, 1], [-20, 60]);
   const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 180]);
   const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const rotate3 = useTransform(scrollYProgress, [0, 1], [0, 90]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.95]);
 
   return (
@@ -44,7 +48,7 @@ const CTASection = () => {
           className="absolute top-1/3 right-[10%] w-48 h-48 bg-primary/10 rounded-full blur-2xl animate-glow-pulse"
         />
         <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], [-40, 80]) }}
+          style={{ y: y4 }}
           className="absolute bottom-1/3 left-[10%] w-36 h-36 bg-accent/10 rounded-full blur-xl animate-glow-pulse"
         />
 
@@ -58,17 +62,17 @@ const CTASection = () => {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-accent/10 rounded-full"
         />
         <motion.div
-          style={{ rotate: useTransform(scrollYProgress, [0, 1], [0, 90]) }}
+          style={{ rotate: rotate3 }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-primary/5 rounded-full"
         />
 
         {/* Floating geometric shapes */}
         <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], [30, -50]) }}
+          style={{ y: yShape1 }}
           className="absolute top-[20%] left-[8%] w-10 h-10 border border-primary/15 rounded-lg rotate-45"
         />
         <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], [-20, 60]) }}
+          style={{ y: yShape2 }}
           className="absolute bottom-[30%] right-[8%] w-14 h-14 border-2 border-accent/10 rounded-full"
         />
 
