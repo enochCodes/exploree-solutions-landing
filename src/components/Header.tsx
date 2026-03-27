@@ -39,20 +39,20 @@ const Header = () => {
             >
               {/* Light mode logo */}
               <Image
-                src="/logo-light.png"
+                src="/wite_mode_full_name_logo-removebg-preview.png"
                 alt="Exploree Solutions"
-                width={220}
-                height={56}
-                className="dark:hidden h-14 w-auto"
+                width={280}
+                height={70}
+                className="dark:hidden h-16 w-auto"
                 priority
               />
               {/* Dark mode logo */}
               <Image
-                src="/logo-dark.png"
+                src="/dark_mode_full_name_logo-removebg-preview.png"
                 alt="Exploree Solutions"
-                width={220}
-                height={56}
-                className="hidden dark:block h-14 w-auto"
+                width={280}
+                height={70}
+                className="hidden dark:block h-16 w-auto"
                 priority
               />
             </motion.a>

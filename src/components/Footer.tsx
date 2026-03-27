@@ -35,12 +35,21 @@ const Footer = () => {
               className="flex items-center mb-4"
               whileHover={{ scale: 1.02 }}
             >
+              {/* Light mode logo */}
               <Image
-                src="/logo-dark.png"
+                src="/wite_mode_full_name_logo-removebg-preview.png"
                 alt="Exploree Solutions"
-                width={160}
-                height={40}
-                className="h-9 w-auto"
+                width={180}
+                height={45}
+                className="dark:hidden h-10 w-auto"
+              />
+              {/* Dark mode logo */}
+              <Image
+                src="/dark_mode_full_name_logo-removebg-preview.png"
+                alt="Exploree Solutions"
+                width={180}
+                height={45}
+                className="hidden dark:block h-10 w-auto"
               />
             </motion.div>
             <p className="text-secondary-foreground/70 text-sm leading-relaxed">
