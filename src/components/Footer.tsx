@@ -39,17 +39,17 @@ const Footer = () => {
               <Image
                 src="/wite_mode_full_name_logo-removebg-preview.png"
                 alt="Exploree Solutions"
-                width={180}
-                height={45}
-                className="dark:hidden h-10 w-auto"
+                width={240}
+                height={60}
+                className="dark:hidden h-14 w-auto"
               />
               {/* Dark mode logo */}
               <Image
                 src="/dark_mode_full_name_logo-removebg-preview.png"
                 alt="Exploree Solutions"
-                width={180}
-                height={45}
-                className="hidden dark:block h-10 w-auto"
+                width={240}
+                height={60}
+                className="hidden dark:block h-14 w-auto"
               />
             </motion.div>
             <p className="text-secondary-foreground/70 text-sm leading-relaxed">

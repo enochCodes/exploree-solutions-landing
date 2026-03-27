@@ -146,23 +146,23 @@ const WhatIsExploreeSection = () => {
                         <div className="relative aspect-square max-w-lg mx-auto">
                             {/* Central Hub */}
                             <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                                className="absolute inset-12 rounded-full border-2 border-dashed border-primary/20"
+                                animate={{ scale: [1, 1.03, 1] }}
+                                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute inset-12 rounded-full border-2 border-dashed border-primary/20 dark:border-primary/30"
                             />
                             <motion.div
-                                animate={{ rotate: -360 }}
-                                transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-                                className="absolute inset-20 rounded-full border-2 border-dashed border-accent/20"
+                                animate={{ scale: [1.03, 1, 1.03] }}
+                                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute inset-20 rounded-full border-2 border-dashed border-accent/20 dark:border-accent/30"
                             />
 
                             {/* Center Logo */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-2xl">
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-2xl">
                                 <motion.div
                                     animate={{ scale: [1, 1.1, 1] }}
                                     transition={{ duration: 2, repeat: Infinity }}
                                 >
-                                    <Brain className="w-12 h-12 text-white" />
+                                    <Brain className="w-14 h-14 text-white" />
                                 </motion.div>
                             </div>
 
@@ -170,7 +170,9 @@ const WhatIsExploreeSection = () => {
                             {opportunityTypes.map((type, index) => {
                                 const Icon = type.icon;
                                 const angle = (index * 360) / opportunityTypes.length;
-                                const radius = 45; // percentage from center
+                                // Outer dashed circle uses inset-12 (3rem = 48px).
+                                // For max-w-lg (~512px), radius = (512/2 - 48) / 512 * 100 ≈ 40.6%
+                                const radius = 40.6;
                                 const x = 50 + radius * Math.cos((angle - 90) * (Math.PI / 180));
                                 const y = 50 + radius * Math.sin((angle - 90) * (Math.PI / 180));
 
@@ -182,14 +184,14 @@ const WhatIsExploreeSection = () => {
                                         viewport={{ once: true }}
                                         transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
                                         whileHover={{ scale: 1.2 }}
-                                        className="absolute w-14 h-14 rounded-xl glass-premium flex items-center justify-center shadow-lg cursor-pointer group"
+                                        className="absolute w-16 h-16 rounded-xl glass-premium border border-border/50 dark:border-border flex items-center justify-center shadow-lg dark:shadow-xl cursor-pointer group"
                                         style={{
                                             left: `${x}%`,
                                             top: `${y}%`,
                                             transform: "translate(-50%, -50%)",
                                         }}
                                     >
-                                        <Icon className="w-6 h-6 text-primary group-hover:text-accent transition-colors" />
+                                        <Icon className="w-7 h-7 text-primary group-hover:text-accent transition-colors" />
                                         <motion.div
                                             initial={{ opacity: 0, y: 10 }}
                                             whileHover={{ opacity: 1, y: 0 }}
