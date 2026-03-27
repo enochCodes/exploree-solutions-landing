@@ -14,6 +14,11 @@ const HeroSection = () => {
   const y1 = useTransform(scrollY, [0, 500], [0, 150]);
   const y2 = useTransform(scrollY, [0, 500], [0, -100]);
   const y3 = useTransform(scrollY, [0, 500], [0, 200]);
+  const y4 = useTransform(scrollY, [0, 500], [0, 80]);
+  const y5 = useTransform(scrollY, [0, 500], [0, -60]);
+  const y6 = useTransform(scrollY, [0, 500], [0, 120]);
+  const y7 = useTransform(scrollY, [0, 500], [0, -80]);
+  const yGrid = useTransform(scrollY, [0, 500], [0, 50]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
   const scale = useTransform(scrollY, [0, 400], [1, 0.9]);
   const rotate1 = useTransform(scrollY, [0, 1000], [0, 45]);
@@ -74,17 +79,17 @@ const HeroSection = () => {
 
           {/* Additional parallax orbs */}
           <motion.div
-            style={{ y: useTransform(scrollY, [0, 500], [0, 80]) }}
+            style={{ y: y4 }}
             className="absolute top-[40%] right-[30%] w-32 h-32 rounded-full bg-accent/10 blur-2xl animate-glow-pulse"
           />
           <motion.div
-            style={{ y: useTransform(scrollY, [0, 500], [0, -60]) }}
+            style={{ y: y5 }}
             className="absolute top-[60%] left-[25%] w-24 h-24 rounded-full bg-primary/15 blur-xl animate-glow-pulse"
           />
         </div>
 
         {/* Animated Grid Pattern with Parallax */}
-        <motion.div style={{ y: useTransform(scrollY, [0, 500], [0, 50]) }} className="absolute inset-0">
+        <motion.div style={{ y: yGrid }} className="absolute inset-0">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.03)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.06)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.06)_1px,transparent_1px)] bg-[size:8rem_8rem]" />
         </motion.div>
@@ -99,11 +104,11 @@ const HeroSection = () => {
           className="absolute bottom-[25%] left-[12%] w-16 h-16 border border-accent/20 rounded-full"
         />
         <motion.div
-          style={{ y: useTransform(scrollY, [0, 500], [0, 120]) }}
+          style={{ y: y6 }}
           className="absolute top-[35%] left-[8%] w-8 h-8 bg-primary/10 rounded-lg rotate-45"
         />
         <motion.div
-          style={{ y: useTransform(scrollY, [0, 500], [0, -80]) }}
+          style={{ y: y7 }}
           className="absolute bottom-[35%] right-[8%] w-12 h-12 border-2 border-accent/15 rounded-full"
         />
 

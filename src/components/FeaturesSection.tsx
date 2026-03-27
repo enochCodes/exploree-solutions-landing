@@ -52,6 +52,10 @@ const FeaturesSection = () => {
   const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const y2 = useTransform(scrollYProgress, [0, 1], [-50, 100]);
   const y3 = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const yGrid = useTransform(scrollYProgress, [0, 1], [0, 30]);
+  const yShape1 = useTransform(scrollYProgress, [0, 1], [50, -80]);
+  const yShape2 = useTransform(scrollYProgress, [0, 1], [-30, 60]);
+  const yShape3 = useTransform(scrollYProgress, [0, 1], [40, -40]);
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 20]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.9]);
 
@@ -86,7 +90,7 @@ const FeaturesSection = () => {
 
       {/* Parallax Grid Pattern */}
       <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], [0, 30]) }}
+        style={{ y: yGrid }}
         className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.02)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]"
       />
 
@@ -106,15 +110,15 @@ const FeaturesSection = () => {
 
       {/* Floating geometric shapes with parallax */}
       <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], [50, -80]) }}
+        style={{ y: yShape1 }}
         className="absolute top-[20%] right-[10%] w-16 h-16 border border-primary/10 rounded-xl rotate-12"
       />
       <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], [-30, 60]) }}
+        style={{ y: yShape2 }}
         className="absolute bottom-[30%] left-[5%] w-12 h-12 bg-accent/5 rounded-lg rotate-45"
       />
       <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], [40, -40]) }}
+        style={{ y: yShape3 }}
         className="absolute top-[60%] right-[5%] w-8 h-8 border-2 border-primary/10 rounded-full"
       />
 
